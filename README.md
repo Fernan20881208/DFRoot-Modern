@@ -18,6 +18,30 @@ La rama de este rediseño es **`modern-v4.0`**. Base: `923e5a42ce5add6ec13b67137
 
 La UI usa vistas nativas Java/XML y los colores dinámicos del sistema; no añade Jetpack Compose ni bibliotecas externas. El estilo visual es inspirado en Android 16, no una afirmación de compatibilidad del motor con todos los dispositivos Android 16.
 
+
+## Licencias de una hora (Supabase + Vercel)
+
+- Panel de administración: https://dfroot-modern-keys-zaid-density-reset.vercel.app
+- Función de validación: `https://zzlvupunploglgxbgllm.supabase.co/functions/v1/dfroot-license`
+- Las claves `DFM-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX` se crean con aleatoriedad criptográfica. Solo se conserva SHA-256 y últimos cuatro caracteres en la base.
+- Válidas durante **60 minutos desde su primera activación** (la activación debe ocurrir durante los primeros 7 días tras la generación), vinculadas a un identificador local aleatorio de la instalación.
+- Validación online obligatoria antes de cada ejecución manual; conexión ausente o clave caducada bloquean el botón de ejecución. La app nunca ejecuta la operación desde la pantalla de acceso sin confirmación.
+- El inicio automático se deshabilita para evitar ejecuciones sin validación. No elimina la posibilidad de modificar una APK por terceros; no es DRM inviolable.
+- El panel usa Supabase Auth; los usuarios administradores se autorizan exclusivamente mediante `public.dfroot_admins`. No hay administradores asignados automáticamente.
+
+### Dar acceso al primer administrador
+
+1. Crea o identifica tu cuenta en **Supabase Authentication > Users**.
+2. En el editor SQL del proyecto ejecuta (sustituye el correo por el de tu cuenta de Supabase):
+   ```sql
+   insert into public.dfroot_admins(user_id)
+   select id from auth.users where lower(email)=lower('TU_CORREO@EJEMPLO.COM')
+   on conflict do nothing;
+   ```
+3. Abre el panel de Vercel e inicia sesión. Las claves generadas **solo se muestran una vez**.
+
+La función mantiene las tablas privadas con RLS habilitado, revocación, límite de intentos y validación atómica para evitar canjes concurrentes en diferentes dispositivos.
+
 ## APK desde GitHub
 
 1. Abre [Actions](https://github.com/Fernan20881208/DFRoot-Modern/actions/workflows/build.yml).
