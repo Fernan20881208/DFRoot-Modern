@@ -29,6 +29,8 @@ El artifact también incluye el código fuente y `SHA256SUMS.txt`. Es una APK de
 
 El workflow compila los ocho módulos originales, valida recursos, ejecuta `assembleDebug` y `lintDebug` y comprueba que el APK contenga `libdfroot.so` y `libbootstrap.so` ARM64. La compilación no ejecuta el exploit ni certifica que funcione en un teléfono concreto.
 
+La APK se compila con **Android API 36** (Android 16); el estilo visual no depende de instalar el SDK experimental API 37. Esto no amplía la compatibilidad del exploit.
+
 ## Sobre `libksud.so not found`
 
 En **DFRoot 4.0**, `libksud.so` proviene del gestor KernelSU que se selecciona; no es una biblioteca que DFRoot deba empaquetar. La versión 4.0 busca el archivo dentro de `ApplicationInfo.nativeLibraryDir` del gestor.

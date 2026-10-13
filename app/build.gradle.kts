@@ -12,13 +12,13 @@ val hasReleaseSigning = listOf("KEYSTORE_FILE", "KEYSTORE_PASSWORD", "KEY_ALIAS"
 
 android {
     namespace = "df.root"
-    compileSdk = 37
+    compileSdk = 36
 
     defaultConfig {
         // Native v4.0 code hardcodes /data/user_de/0/df.root. Do not add a suffix.
         applicationId = "df.root"
         minSdk = 32
-        targetSdk = 37
+        targetSdk = 36
         versionCode = 40001
         versionName = "4.0-modern.1"
         ndk { abiFilters += listOf("arm64-v8a") }
