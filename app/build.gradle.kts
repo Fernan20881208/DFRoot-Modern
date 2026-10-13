@@ -15,7 +15,8 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "df.root.modern"
+        // Native v4.0 code hardcodes /data/user_de/0/df.root. Do not add a suffix.
+        applicationId = "df.root"
         minSdk = 32
         targetSdk = 37
         versionCode = 40001
@@ -37,7 +38,7 @@ android {
     buildTypes {
         debug {
             isDebuggable = true
-            // Installs alongside official DFRoot without signature/package conflict.
+            // Keep the upstream package so native bootstrap paths remain correct.
             versionNameSuffix = "-debug"
             signingConfig = signingConfigs.getByName("debug")
         }

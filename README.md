@@ -14,7 +14,7 @@ La rama de este rediseño es **`modern-v4.0`**. Base: `923e5a42ce5add6ec13b67137
 - Selector que muestra gestores con `libksud.so` accesible y permite actualizar la lista.
 - Información del dispositivo y consola con copiar/limpiar; conserva el registro y el estado al girar el teléfono.
 - Estados diferenciados: sin configurar, en ejecución, error, proceso terminado y marcador detectado.
-- Icono adaptable. Paquete independiente `df.root.modern`, instalable junto al original.
+- Icono adaptable. Conserva el paquete `df.root`, requerido por las rutas internas del motor 4.0.
 
 La UI usa vistas nativas Java/XML y los colores dinámicos del sistema; no añade Jetpack Compose ni bibliotecas externas. El estilo visual es inspirado en Android 16, no una afirmación de compatibilidad del motor con todos los dispositivos Android 16.
 
@@ -25,7 +25,7 @@ La UI usa vistas nativas Java/XML y los colores dinámicos del sistema; no añad
 3. Descarga el artifact **DFRoot-Modern-4.0**.
 4. Extrae `DFRoot-Modern-4.0-debug.apk`.
 
-El artifact también incluye el código fuente y `SHA256SUMS.txt`. Es una APK debug para pruebas, firmada con una clave de desarrollo. Diferentes ejecuciones de CI pueden generar firmas distintas; no se utiliza ninguna clave privada de producción.
+El artifact también incluye el código fuente y `SHA256SUMS.txt`. Es una APK debug para pruebas, firmada con una clave de desarrollo. Para instalarla, primero tendrás que desinstalar la versión oficial de DFRoot si está presente, porque ambas usan `df.root` y tienen firmas distintas. Desinstalar elimina los ajustes de DFRoot. No es necesario desinstalar el gestor KernelSU. Diferentes ejecuciones de CI pueden generar firmas distintas; no se utiliza ninguna clave privada de producción.
 
 El workflow compila los ocho módulos originales, valida recursos, ejecuta `assembleDebug` y `lintDebug` y comprueba que el APK contenga `libdfroot.so` y `libbootstrap.so` ARM64. La compilación no ejecuta el exploit ni certifica que funcione en un teléfono concreto.
 
@@ -37,7 +37,7 @@ Si no aparece ningún gestor, instala uno compatible y toca **Actualizar**. Si e
 
 ## Base y alcance
 
-Se conservan sin cambios `app/src/main/jni/`, `lkm/`, `ExploitRunner.java` y `BootReceiver.java`. CI verifica su igualdad con el commit base. El arranque automático sigue desactivado por defecto. Las preferencias conservan sus claves originales, dentro del almacenamiento de la nueva aplicación.
+Se conservan sin cambios `app/src/main/jni/`, `lkm/`, `ExploitRunner.java` y `BootReceiver.java`. CI verifica su igualdad con el commit base. El arranque automático sigue desactivado por defecto. Las preferencias conservan sus claves originales, en el mismo tipo de almacenamiento de la aplicación. El identificador no se cambia porque `bootstrap.c` y `lkm/dfroot.c` contienen rutas fijas `/data/user_de/0/df.root/`.
 
 DFRoot puede congelar o reiniciar dispositivos incompatibles. El rediseño no cambia esa compatibilidad. Abrir la interfaz no inicia el motor; la ejecución manual requiere pulsar el botón y confirmar.
 
