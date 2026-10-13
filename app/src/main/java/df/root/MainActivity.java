@@ -1,6 +1,7 @@
 package df.root;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -54,6 +55,9 @@ public class MainActivity extends Activity implements RunSession.Observer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Auto-boot must never bypass the online hourly license check.
+        getPackageManager().setComponentEnabledSetting(new ComponentName(this, BootReceiver.class),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
         mDeCtx = createDeviceProtectedStorageContext();
         setContentView(R.layout.activity_main);
 
