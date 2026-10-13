@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="df.root">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <!-- DFRoot v4.0 detects KernelSU-compatible managers by inspecting installed apps
+         for libksud.so; there is no fixed package list for a <queries> filter. -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
     <application
         android:label="@string/title_main"
         android:icon="@mipmap/ic_launcher"
