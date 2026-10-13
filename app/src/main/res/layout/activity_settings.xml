@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/settingsContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true" />
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/settingsRoot"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true"
+    android:background="@color/df_background" android:clipToPadding="false">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:paddingHorizontal="24dp" android:paddingTop="12dp" android:paddingBottom="28dp">
+        <Button android:id="@+id/btnBack" style="@style/DfSmallButton" android:text="@string/back" />
+        <TextView style="@style/DfHeadline" android:layout_marginTop="24dp" android:text="@string/settings_headline" />
+        <TextView style="@style/DfBody" android:layout_marginTop="6dp" android:text="@string/settings_subtitle" />
+        <TextView style="@style/DfSection" android:text="@string/settings_appearance" />
+        <LinearLayout style="@style/DfCard" android:background="@drawable/df_hero_card">
+            <TextView style="@style/DfCardTitle" android:text="@string/settings_dynamic" android:textColor="@color/df_on_container" />
+            <TextView style="@style/DfBody" android:layout_marginTop="8dp" android:text="@string/settings_dynamic_detail" android:textColor="@color/df_on_container" />
+        </LinearLayout>
+        <TextView style="@style/DfSection" android:text="@string/settings_behavior" />
+        <LinearLayout style="@style/DfCard" android:layout_marginBottom="8dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView style="@style/DfCardTitle" android:layout_width="0dp" android:layout_weight="1" android:textSize="17sp"
+                    android:paddingEnd="16dp" android:text="@string/boot_title" />
+                <Switch android:id="@+id/switchBoot" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:minHeight="48dp" android:minWidth="56dp" android:contentDescription="@string/boot_title" />
+            </LinearLayout>
+            <TextView style="@style/DfBody" android:layout_marginTop="6dp" android:text="@string/boot_detail" />
+        </LinearLayout>
+        <LinearLayout style="@style/DfCard" android:layout_marginBottom="8dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView style="@style/DfCardTitle" android:layout_width="0dp" android:layout_weight="1" android:textSize="17sp"
+                    android:paddingEnd="16dp" android:text="@string/reboot_title" />
+                <Switch android:id="@+id/switchReboot" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:minHeight="48dp" android:minWidth="56dp" android:contentDescription="@string/reboot_title" />
+            </LinearLayout>
+            <TextView style="@style/DfBody" android:layout_marginTop="6dp" android:text="@string/reboot_detail" />
+        </LinearLayout>
+        <LinearLayout style="@style/DfCard" android:layout_marginBottom="8dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView style="@style/DfCardTitle" android:layout_width="0dp" android:layout_weight="1" android:textSize="17sp"
+                    android:paddingEnd="16dp" android:text="@string/modules_title" />
+                <Switch android:id="@+id/switchModules" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:minHeight="48dp" android:minWidth="56dp" android:contentDescription="@string/modules_title" />
+            </LinearLayout>
+            <TextView style="@style/DfBody" android:layout_marginTop="6dp" android:text="@string/modules_detail" />
+        </LinearLayout>
+        <TextView style="@style/DfSection" android:text="@string/settings_about" />
+        <LinearLayout style="@style/DfCard">
+            <TextView style="@style/DfCardTitle" android:text="@string/settings_version" />
+            <TextView style="@style/DfBody" android:layout_marginTop="8dp" android:text="@string/settings_about_detail" />
+            <Button android:id="@+id/btnSource" style="@style/DfSmallButton" android:layout_marginTop="16dp" android:text="@string/view_source" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

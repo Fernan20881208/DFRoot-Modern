@@ -4,42 +4,45 @@ plugins {
     id("com.android.application")
 }
 
-val signingProps = Properties().also {
-    it.load(rootProject.file("signing.properties").inputStream())
-}
+val signingProps = Properties()
+val signingPropsFile = rootProject.file("signing.properties")
+if (signingPropsFile.exists()) signingProps.load(signingPropsFile.inputStream())
+val hasReleaseSigning = listOf("KEYSTORE_FILE", "KEYSTORE_PASSWORD", "KEY_ALIAS", "KEY_PASSWORD")
+    .all { !signingProps.getProperty(it).isNullOrBlank() }
 
 android {
     namespace = "df.root"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "df.root"
+        applicationId = "df.root.modern"
         minSdk = 32
         targetSdk = 37
-        versionCode = 400
-        versionName = "4.0"
-
-        ndk {
-            abiFilters += listOf("arm64-v8a")
-        }
+        versionCode = 40001
+        versionName = "4.0-modern.1"
+        ndk { abiFilters += listOf("arm64-v8a") }
     }
 
     signingConfigs {
         create("release") {
-            storeFile = file(signingProps.getProperty("KEYSTORE_FILE"))
-            storePassword = signingProps.getProperty("KEYSTORE_PASSWORD")
-            keyAlias = signingProps.getProperty("KEY_ALIAS")
-            keyPassword = signingProps.getProperty("KEY_PASSWORD")
+            if (hasReleaseSigning) {
+                storeFile = file(signingProps.getProperty("KEYSTORE_FILE"))
+                storePassword = signingProps.getProperty("KEYSTORE_PASSWORD")
+                keyAlias = signingProps.getProperty("KEY_ALIAS")
+                keyPassword = signingProps.getProperty("KEY_PASSWORD")
+            }
         }
     }
 
     buildTypes {
         debug {
             isDebuggable = true
+            // Installs alongside official DFRoot without signature/package conflict.
+            versionNameSuffix = "-debug"
             signingConfig = signingConfigs.getByName("debug")
         }
         release {
-            signingConfig = signingConfigs.getByName("release")
+            if (hasReleaseSigning) signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -51,21 +54,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    lint {
-        checkReleaseBuilds = false
-    }
+    lint { checkReleaseBuilds = false }
 
     externalNativeBuild {
-        cmake {
-            path("src/main/jni/CMakeLists.txt")
-        }
+        cmake { path("src/main/jni/CMakeLists.txt") }
     }
 
-    packaging {
-        jniLibs {
-            useLegacyPackaging = true
-        }
-    }
+    packaging { jniLibs { useLegacyPackaging = true } }
 }
 
 androidComponents {
@@ -76,5 +71,4 @@ androidComponents {
     }
 }
 
-dependencies {
-}
+dependencies { }

@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <SwitchPreference
         android:key="boot_start"
-        android:title="Start at Boot"
-        android:summary="Automatically run DFRoot on device boot" />
-
+        android:title="Ejecutar al iniciar Android"
+        android:summary="Riesgoso: puede causar bucles de reinicio. Déjalo apagado si no has confirmado la compatibilidad."
+        android:defaultValue="false" />
     <SwitchPreference
         android:key="soft_reboot"
-        android:title="Auto Soft Reboot"
-        android:summary="Applies to both Manual Start and Start at Boot.\nNOTE: this will only work if your SU manager supports it as a late-load arg"
+        android:title="Reinicio suave automático"
+        android:summary="Se aplica al inicio manual y automático."
         android:defaultValue="false" />
-
     <SwitchPreference
         android:key="disable_modules"
-        android:title="Disable KSU Modules"
-        android:summary="Turn this on if a broken module is crashing your device. The next run will launch with all modules disabled."
+        android:title="Desactivar módulos KernelSU"
+        android:summary="Útil para recuperarse de un módulo defectuoso. Se aplica durante la próxima ejecución."
         android:defaultValue="false" />
-
 </PreferenceScreen>

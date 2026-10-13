@@ -1,11 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.DirtyFrag" parent="android:Theme.Material">
-        <item name="android:windowBackground">@android:color/black</item>
-        <item name="android:colorBackground">@android:color/black</item>
-        <item name="android:colorPrimary">#4A7A57</item>
-        <item name="android:colorAccent">#4A7A57</item>
-        <item name="android:colorButtonNormal">@color/btn_background_color</item>
-        <item name="android:buttonCornerRadius">24dp</item>
-        <item name="android:buttonStyle">@style/Widget.DirtyFrag.Button</item>
+    <style name="Theme.DirtyFrag" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:statusBarColor">@color/df_background</item>
+        <item name="android:navigationBarColor">@color/df_background</item>
+        <item name="android:windowBackground">@color/df_background</item>
+        <item name="android:colorPrimary">@color/df_surface</item>
+        <item name="android:colorAccent">@color/df_primary</item>
+        <item name="android:actionBarTheme">@style/Theme.DirtyFrag.ActionBar</item>
+    </style>
+    <style name="Theme.DirtyFrag.ActionBar" parent="android:style/ThemeOverlay.Material.Dark.ActionBar">
+        <item name="android:colorControlNormal">@color/df_on_surface</item>
     </style>
 </resources>

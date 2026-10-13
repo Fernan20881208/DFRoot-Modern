@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DfHeadline">
+        <item name="android:layout_width">match_parent</item><item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">40sp</item><item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/df_on_surface</item><item name="android:letterSpacing">-0.025</item>
+    </style>
+    <style name="DfBody">
+        <item name="android:layout_width">match_parent</item><item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item><item name="android:lineSpacingExtra">3dp</item>
+        <item name="android:textColor">@color/df_muted</item>
+    </style>
+    <style name="DfCaption" parent="DfBody">
+        <item name="android:textSize">12sp</item><item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="DfCardTitle" parent="DfBody">
+        <item name="android:textSize">20sp</item><item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/df_on_surface</item>
+    </style>
+    <style name="DfSection" parent="DfCardTitle">
+        <item name="android:layout_marginTop">28dp</item><item name="android:layout_marginBottom">12dp</item>
+    </style>
+    <style name="DfCard">
+        <item name="android:layout_width">match_parent</item><item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item><item name="android:padding">20dp</item>
+        <item name="android:background">@drawable/df_surface_card</item>
+    </style>
+    <style name="DfSmallButton">
+        <item name="android:layout_width">wrap_content</item><item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">48dp</item><item name="android:minWidth">64dp</item>
+        <item name="android:paddingHorizontal">16dp</item><item name="android:paddingVertical">10dp</item>
+        <item name="android:textAllCaps">false</item><item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/df_on_surface</item><item name="android:background">@drawable/df_small_button</item>
+        <item name="android:backgroundTint">@null</item>
+    </style>
+</resources>

@@ -1,56 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
-
-    <Spinner
-        android:id="@+id/spinnerSuManager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:background="@null"
-        android:overlapAnchor="false" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="5">
-
-        <Button
-            android:id="@+id/btnRun"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:text="Launch Root" />
-
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true" android:background="@color/df_background" android:clipToPadding="false">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:paddingHorizontal="24dp" android:paddingTop="12dp" android:paddingBottom="28dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center_vertical" android:orientation="horizontal">
+            <ImageView android:layout_width="40dp" android:layout_height="40dp" android:padding="9dp"
+                android:src="@drawable/ic_shield_modern" android:background="@drawable/df_logo_bg" android:importantForAccessibility="no" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_marginStart="12dp" android:text="@string/brand" android:textSize="19sp"
+                android:fontFamily="sans-serif-medium" android:textColor="@color/df_on_surface" />
+            <ImageButton android:id="@+id/btnSettings" android:layout_width="48dp" android:layout_height="48dp"
+                android:padding="12dp" android:src="@drawable/ic_settings" android:tint="@color/df_on_surface"
+                android:background="@drawable/df_small_button" android:contentDescription="@string/settings" />
+        </LinearLayout>
+        <TextView style="@style/DfHeadline" android:layout_marginTop="24dp" android:text="@string/home_headline" />
+        <TextView style="@style/DfBody" android:layout_marginTop="6dp" android:layout_marginBottom="24dp"
+            android:text="@string/subtitle_main" />
+        <LinearLayout style="@style/DfCard" android:background="@drawable/df_hero_card" android:padding="24dp">
+            <TextView style="@style/DfCaption" android:text="@string/section_status" android:textColor="@color/df_on_container" />
+            <TextView android:id="@+id/statusTitle" style="@style/DfCardTitle" android:layout_marginTop="14dp"
+                android:text="@string/status_not_ready" android:textSize="28sp" android:textColor="@color/df_on_container"
+                android:accessibilityLiveRegion="polite" />
+            <TextView android:id="@+id/statusDetail" style="@style/DfBody" android:layout_marginTop="8dp"
+                android:text="@string/status_select_manager" android:textColor="@color/df_on_container" />
+            <ProgressBar android:id="@+id/progressRun" style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent" android:layout_height="6dp" android:layout_marginTop="18dp"
+                android:indeterminate="true" android:visibility="gone" android:indeterminateTint="@color/df_primary" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" android:gravity="center_vertical" android:orientation="horizontal">
+            <TextView style="@style/DfCardTitle" android:layout_width="0dp" android:layout_weight="1" android:text="@string/section_manager" />
+            <Button android:id="@+id/btnRefresh" style="@style/DfSmallButton" android:text="@string/refresh" />
+        </LinearLayout>
+        <LinearLayout style="@style/DfCard" android:layout_marginTop="10dp">
+            <Spinner android:id="@+id/spinnerSuManager" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:minHeight="56dp" android:spinnerMode="dropdown" android:prompt="@string/choose_manager"
+                android:popupBackground="@color/df_surface" android:contentDescription="@string/choose_manager" />
+            <TextView android:id="@+id/managerHelp" style="@style/DfBody" android:layout_marginTop="8dp" android:text="@string/manager_hint" />
+        </LinearLayout>
+        <Button android:id="@+id/btnRun" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:minHeight="64dp" android:paddingVertical="16dp" android:paddingHorizontal="24dp"
+            android:layout_marginTop="16dp" android:text="@string/run_action" android:textAllCaps="false"
+            android:textSize="18sp" android:fontFamily="sans-serif-medium" android:textColor="@color/df_on_primary"
+            android:background="@drawable/df_primary_button" android:backgroundTint="@null" />
+        <TextView style="@style/DfBody" android:layout_marginTop="12dp" android:text="@string/warning_detail" android:textSize="12sp" />
+        <TextView style="@style/DfSection" android:text="@string/section_device" />
+        <LinearLayout style="@style/DfCard">
+            <TextView style="@style/DfCaption" android:text="@string/label_device" />
+            <TextView android:id="@+id/deviceModel" style="@style/DfCardTitle" android:layout_marginTop="6dp" />
+            <TextView android:id="@+id/deviceAndroid" style="@style/DfBody" android:layout_marginTop="4dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="16dp" android:background="@color/df_divider" />
+            <TextView style="@style/DfCaption" android:text="@string/label_kernel" />
+            <TextView android:id="@+id/deviceKernel" style="@style/DfBody" android:layout_marginTop="4dp" android:textIsSelectable="true" />
+            <TextView style="@style/DfCaption" android:layout_marginTop="14dp" android:text="@string/label_patch" />
+            <TextView android:id="@+id/devicePatch" style="@style/DfBody" android:layout_marginTop="4dp" />
+        </LinearLayout>
+        <TextView style="@style/DfSection" android:text="@string/section_logs" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="10dp">
+            <Button android:id="@+id/btnCopy" style="@style/DfSmallButton" android:text="@string/copy" />
+            <Button android:id="@+id/btnClear" style="@style/DfSmallButton" android:layout_marginStart="8dp" android:text="@string/clear" />
+        </LinearLayout>
+        <ScrollView android:id="@+id/outputScroll" android:layout_width="match_parent" android:layout_height="224dp"
+            android:padding="18dp" android:fillViewport="true" android:nestedScrollingEnabled="true" android:background="@drawable/df_surface_card">
+            <TextView android:id="@+id/outputView" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:fontFamily="monospace" android:textIsSelectable="true" android:textSize="12sp" android:lineSpacingExtra="3dp"
+                android:textColor="@color/df_on_surface" android:textColorHint="@color/df_muted" android:hint="@string/log_placeholder" />
+        </ScrollView>
+        <TextView style="@style/DfBody" android:layout_marginTop="24dp" android:gravity="center"
+            android:text="@string/footer" android:textSize="12sp" />
     </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/outputScroll"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp">
-
-        <TextView
-            android:id="@+id/outputView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textIsSelectable="true"
-            android:textSize="11sp"
-            android:textColor="?android:attr/textColorPrimary" />
-
-    </ScrollView>
-
-</LinearLayout>
+</ScrollView>
