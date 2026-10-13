@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 import java.io.OutputStream;
+import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -63,7 +65,18 @@ final class LicenseGate {
                             body.put("action","redeem");body.put("key",key);body.put("device",deviceId);
                             try(OutputStream stream=conn.getOutputStream()){stream.write(body.toString().getBytes(StandardCharsets.UTF_8));}
                             if(conn.getResponseCode()==200) {
-                                byte[] response=conn.getInputStream().readAllBytes();
+                                byte[] response;
+                                try (InputStream inputStream = conn.getInputStream();
+                                     ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+                                    byte[] buffer = new byte[1024];
+                                    int count;
+                                    while ((count = inputStream.read(buffer)) != -1) {
+                                        if (output.size() + count > 16384)
+                                            throw new java.io.IOException("License response too large");
+                                        output.write(buffer, 0, count);
+                                    }
+                                    response = output.toByteArray();
+                                }
                                 valid=new JSONObject(new String(response, StandardCharsets.UTF_8)).optBoolean("valid",false);
                             }
                         } finally {conn.disconnect();}
