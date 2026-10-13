@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements RunSession.Observer {
         deviceKernel.setText(System.getProperty("os.version", "No disponible"));
         devicePatch.setText(Build.VERSION.SECURITY_PATCH);
 
-        btnRun.setOnClickListener(v -> confirmExecution());
+        btnRun.setOnClickListener(v -> LicenseGate.request(this, () -> confirmExecution()));
         btnCopy.setOnClickListener(v -> {
             String logs = outputView.getText().toString();
             if (logs.isEmpty()) {

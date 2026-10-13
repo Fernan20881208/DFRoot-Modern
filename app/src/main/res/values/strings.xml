@@ -52,7 +52,7 @@
     <string name="settings_dynamic_detail">La paleta y el tema claro u oscuro siguen la configuración de Android.</string>
     <string name="settings_behavior">Comportamiento</string>
     <string name="boot_title">Ejecutar al iniciar Android</string>
-    <string name="boot_detail">Puede causar bucles de reinicio en equipos incompatibles.</string>
+    <string name="boot_detail">Desactivado: la licencia de una hora requiere comprobación online.</string>
     <string name="reboot_title">Reinicio suave automático</string>
     <string name="reboot_detail">Se aplica a las ejecuciones manuales y de arranque.</string>
     <string name="modules_title">Desactivar módulos KernelSU</string>
@@ -61,4 +61,10 @@
     <string name="settings_version">DFRoot Modern 4.0</string>
     <string name="settings_about_detail">Interfaz inspirada en Material You de Android 16. Código base: DFRoot v4.0, de diabl0w.</string>
     <string name="view_source">Código fuente</string>
+    <string name="license_prompt">Clave de acceso por 1 hora</string>
+    <string name="license_hint">Introduce tu clave. Se activará durante 60 minutos desde el primer uso y quedará vinculada a este dispositivo. Necesitas Internet para cada ejecución.</string>
+    <string name="license_invalid">Clave no válida, caducada o ya utilizada en otro dispositivo.</string>
+    <string name="license_network">No fue posible verificar la clave. Comprueba tu conexión.</string>
+    <string name="license_checking">Validando clave…</string>
+    <string name="license_boot_disabled">El inicio automático está desactivado porque requiere validar la licencia online.</string>
 </resources>

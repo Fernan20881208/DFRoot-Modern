@@ -23,11 +23,11 @@ public class SettingsActivity extends Activity {
                 ExploitRunner.PREFS_NAME, Context.MODE_PRIVATE);
         ComponentName receiver = new ComponentName(this, BootReceiver.class);
         Switch boot = findViewById(R.id.switchBoot);
-        boot.setChecked(getPackageManager().getComponentEnabledSetting(receiver)
-                == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
-        boot.setOnCheckedChangeListener((view, enabled) -> getPackageManager().setComponentEnabledSetting(
-                receiver, enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                        : PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP));
+        getPackageManager().setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        boot.setChecked(false);
+        boot.setEnabled(false);
+        // No automatic execution: hourly license requires online confirmation before every run.
         bindPreference(R.id.switchReboot, ExploitRunner.PREF_SOFT_REBOOT, prefs);
         bindPreference(R.id.switchModules, "disable_modules", prefs);
     }
