@@ -6,6 +6,14 @@ Interfaz nativa inspirada en **Material You / Android 16**, sobre el código exa
 
 La rama de este rediseño es **`modern-v4.0`**. Base: `923e5a42ce5add6ec13b67137f118b6d5e3c952f`. No incluye cambios del motor de 4.1 o 4.2.
 
+## Compatibilidad Android 12 (API 31)
+
+- **APK**: mínimo Android 12 **API 31** (`minSdk=31`); admite también Android 12L (API 32) y posteriores.
+- **UI**: Material You dinámico (Android 12+) y modo claro/oscuro; se conserva el acceso online al sistema de claves.
+- **Motor**: no se modifica DFRoot 4.0. Que la APK se instale **no** significa que el exploit funcione en el kernel o nivel de parche de un teléfono Android 12; ejecutar el motor en un dispositivo incompatible puede congelarlo o reiniciarlo.
+- **Arquitectura**: exclusivamente **ARM64**. Para verificar instalación sin ejecutar el motor, abre primero la interfaz, ajustes y pantalla de clave.
+- **Verificación CI**: compila con SDK 36, prueba compatibilidad de llamadas de Android con Lint y comprueba en el APK que `sdkVersion` sea 31.
+
 ## Interfaz
 
 - Colores del fondo de pantalla y tema claro/oscuro del sistema.

@@ -17,10 +17,11 @@ android {
     defaultConfig {
         // Native v4.0 code hardcodes /data/user_de/0/df.root. Do not add a suffix.
         applicationId = "df.root"
-        minSdk = 32
+        // Android 12 (API 31); CI checks the packaged manifest and API compatibility.
+        minSdk = 31
         targetSdk = 36
-        versionCode = 40001
-        versionName = "4.0-modern.1"
+        versionCode = 40002
+        versionName = "4.0-modern.2"
         ndk { abiFilters += listOf("arm64-v8a") }
     }
 

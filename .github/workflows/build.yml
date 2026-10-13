@@ -85,6 +85,14 @@ jobs:
         run: python3 scripts/validate_ui.py
       - name: Build debug APK
         run: ./gradlew :app:assembleDebug :app:lintDebug --stacktrace --no-daemon
+      - name: Verify Android 12 minimum SDK in APK
+        run: |
+          set -euo pipefail
+          APK="$(find app/build/outputs/apk/debug -maxdepth 1 -name '*.apk' -print -quit)"
+          test -n "$APK"
+          AAPT="$(find "$ANDROID_HOME/build-tools" -maxdepth 2 -type f -name aapt | sort -V | tail -1)"
+          test -n "$AAPT" && test -x "$AAPT"
+          "$AAPT" dump badging "$APK" | grep -F "sdkVersion:'31'"
       - name: Verify packaged native executables
         run: |
           mkdir -p dist
