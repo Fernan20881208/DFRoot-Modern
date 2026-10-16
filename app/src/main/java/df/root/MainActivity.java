@@ -86,7 +86,7 @@ public class MainActivity extends Activity implements RunSession.Observer {
         btnRun.setOnClickListener(v -> new AlertDialog.Builder(this)
                 .setTitle(R.string.arm32_unavailable_title)
                 .setMessage(R.string.arm32_unavailable_detail)
-                .setPositiveButton(android.R.string.ok, null).show());
+                .setPositiveButton(R.string.back, null).show());
         btnCopy.setOnClickListener(v -> {
             String logs = outputView.getText().toString();
             if (logs.isEmpty()) {
