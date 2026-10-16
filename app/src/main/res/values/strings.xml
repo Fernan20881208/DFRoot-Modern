@@ -70,4 +70,16 @@
     <string name="arm32_unavailable_title">Motor ARM32 no disponible</string>
     <string name="arm32_unavailable_detail">Esta versión permite utilizar la interfaz en Android ARMv7 de 32 bits. El motor original solo funciona con componentes ARM64 y no está disponible aquí. No concede root.</string>
     <string name="arm32_action_unavailable">Root no disponible en ARM32</string>
+    <string name="tv_headline">DFRoot Modern para Android TV</string>
+    <string name="tv_subtitle">Diagnóstico del sistema · objetivo kernel 5.4.284</string>
+    <string name="tv_status_label">COMPATIBILIDAD DEL KERNEL</string>
+    <string name="tv_kernel_identified">Kernel 5.4.284 detectado · root todavía no disponible</string>
+    <string name="tv_kernel_other">Kernel distinto de 5.4.284 · diagnóstico solamente</string>
+    <string name="tv_no_root">El motor original de DFRoot usa código ARM64 y módulos para otras versiones del kernel. Esta versión de TV no ejecuta modificaciones privilegiadas.</string>
+    <string name="tv_device_heading">Detalles del Android TV</string>
+    <string name="tv_loading">Leyendo información del dispositivo…</string>
+    <string name="tv_copy">Copiar diagnóstico</string>
+    <string name="tv_copied">Información copiada al portapapeles</string>
+    <string name="tv_no_browser">No se encontró un navegador instalado en Android TV</string>
+    <string name="tv_help">Utiliza las flechas del control remoto para seleccionar opciones y OK para confirmar. Comparte el diagnóstico del sistema para evaluar un posible port del motor.</string>
 </resources>
