@@ -22,6 +22,8 @@ jobs:
       - name: Install Android SDK 36
         run: '"$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36"'
       - uses: gradle/actions/setup-gradle@v4
+      - name: Validate read-only TV diagnostic script
+        run: sh -n scripts/tv_rtd6748_probe.sh
       - name: Validate resources
         run: python3 scripts/validate_ui.py
       - name: Compile APK and run Android lint
