@@ -41,6 +41,6 @@ print(f'OK: {len(xml_files)} XML; {len(string_refs)} strings; {len(id_refs)} IDs
 
 # v4.0 hardcodes this package in its unchanged native bootstrap and kernel module.
 build = (root / 'app/build.gradle.kts').read_text()
-if not re.search(r'applicationId\s*=\s*"df\.root"', build) or re.search(r'^\s*applicationIdSuffix', build, re.M):
-    sys.exit('ERROR: el motor v4.0 requiere applicationId df.root sin sufijo')
-print('OK: applicationId compatible con las rutas nativas de v4.0')
+if not re.search(r'applicationId\s*=\s*"df\.root\.arm32"', build) or re.search(r'^\s*applicationIdSuffix', build, re.M):
+    sys.exit('ERROR: la edición ARM32 requiere df.root.arm32')
+print('OK: applicationId de ARM32 aislado')
