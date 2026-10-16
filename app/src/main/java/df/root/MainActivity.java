@@ -32,6 +32,8 @@ import java.util.List;
 
 /** UI-only redesign of the upstream DFRoot MainActivity. The exploit is unchanged. */
 public class MainActivity extends Activity implements RunSession.Observer {
+    static { System.loadLibrary("dfroot_archprobe"); }
+    private static native String nativeArchitecture();
 
 
     private Button btnRun;
@@ -76,12 +78,15 @@ public class MainActivity extends Activity implements RunSession.Observer {
         deviceKernel = findViewById(R.id.deviceKernel);
         devicePatch = findViewById(R.id.devicePatch);
 
-        deviceModel.setText(Build.MANUFACTURER + " " + Build.MODEL);
+        deviceModel.setText(Build.MANUFACTURER + " " + Build.MODEL + " • " + nativeArchitecture());
         deviceAndroid.setText("Android " + Build.VERSION.RELEASE + " (API " + Build.VERSION.SDK_INT + ")");
         deviceKernel.setText(System.getProperty("os.version", "No disponible"));
         devicePatch.setText(Build.VERSION.SECURITY_PATCH);
 
-        btnRun.setOnClickListener(v -> LicenseGate.request(this, () -> confirmExecution()));
+        btnRun.setOnClickListener(v -> new AlertDialog.Builder(this)
+                .setTitle(R.string.arm32_unavailable_title)
+                .setMessage(R.string.arm32_unavailable_detail)
+                .setPositiveButton(android.R.string.ok, null).show());
         btnCopy.setOnClickListener(v -> {
             String logs = outputView.getText().toString();
             if (logs.isEmpty()) {
@@ -111,54 +116,13 @@ public class MainActivity extends Activity implements RunSession.Observer {
     }
 
     private void refreshStatus() {
-        boolean marker = hasDfMarker();
-        if (session.isRunning()) {
-            statusTitle.setText(R.string.status_running);
-            statusDetail.setText(R.string.status_running_detail);
-        } else if (session.result() != null && session.result() != 0) {
-            statusTitle.setText(R.string.status_error);
-            statusDetail.setText(R.string.status_error_detail);
-        } else if (marker) {
-            statusTitle.setText(R.string.status_marker);
-            statusDetail.setText(R.string.status_marker_detail);
-        } else if (session.result() != null) {
-            statusTitle.setText(R.string.status_complete);
-            statusDetail.setText(R.string.status_complete_detail);
-        } else if (mValidSuManagerPos == 0) {
-            statusTitle.setText(R.string.status_not_ready);
-            statusDetail.setText(R.string.status_select_manager);
-        } else {
-            statusTitle.setText(R.string.status_ready);
-            statusDetail.setText(R.string.status_ready_detail);
-        }
-        btnRun.setEnabled(!session.isRunning() && mValidSuManagerPos > 0 && !marker);
-        spinnerSuManager.setEnabled(!session.isRunning() && spinnerSuManager.getAdapter() != null && spinnerSuManager.getCount() > 1);
-        findViewById(R.id.btnRefresh).setEnabled(!session.isRunning());
-        btnRun.setText(session.isRunning() ? R.string.status_running : R.string.run_action);
-        progressRun.setVisibility(session.isRunning() ? View.VISIBLE : View.GONE);
-    }
-
-    /** Always require an explicit user confirmation before executing the original exploit. */
-    private void confirmExecution() {
-        if (session.isRunning() || mValidSuManagerPos == 0 || hasDfMarker()) return;
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.confirm_title)
-                .setMessage(R.string.confirm_message)
-                .setNegativeButton(R.string.cancel, (dialog, which) -> {})
-                .setPositiveButton(R.string.execute, (dialog, which) -> startExecution())
-                .show();
-    }
-
-    private void startExecution() {
-        if (session.isRunning() || mValidSuManagerPos == 0 || hasDfMarker()) return;
-        SuManagerEntry selected = (SuManagerEntry) spinnerSuManager.getSelectedItem();
-        try {
-            if (selected == null || !hasKsud(getPackageManager().getApplicationInfo(selected.packageName, 0))) {
-                populateManagers();
-                return;
-            }
-        } catch (PackageManager.NameNotFoundException error) { populateManagers(); return; }
-        session.start(this);
+        statusTitle.setText(R.string.arm32_unavailable_title);
+        statusDetail.setText(R.string.arm32_unavailable_detail);
+        btnRun.setText(R.string.arm32_action_unavailable);
+        btnRun.setEnabled(false);
+        spinnerSuManager.setEnabled(false);
+        progressRun.setVisibility(View.GONE);
+        findViewById(R.id.btnRefresh).setEnabled(true);
     }
 
     @Override public void onSessionChanged() {
