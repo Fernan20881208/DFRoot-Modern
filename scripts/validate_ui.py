@@ -41,6 +41,6 @@ print(f'OK: {len(xml_files)} XML; {len(string_refs)} strings; {len(id_refs)} IDs
 
 # v4.0 hardcodes this package in its unchanged native bootstrap and kernel module.
 build = (root / 'app/build.gradle.kts').read_text()
-if not re.search(r'applicationId\s*=\s*"df\.root\.arm32"', build) or re.search(r'^\s*applicationIdSuffix', build, re.M):
-    sys.exit('ERROR: la edición ARM32 requiere df.root.arm32')
-print('OK: applicationId de ARM32 aislado')
+if not re.search(r'applicationId\s*=\s*"df\.root\.arm32\.tv"', build) or re.search(r'^\s*applicationIdSuffix', build, re.M):
+    sys.exit('ERROR: la edición Android TV requiere df.root.arm32.tv')
+print('OK: applicationId Android TV separado')
