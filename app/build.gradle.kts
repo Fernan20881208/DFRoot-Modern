@@ -16,12 +16,12 @@ android {
 
     defaultConfig {
         // Independent installation for ARMv7-compatible UI.
-        applicationId = "df.root.arm32"
-        // Android 12 (API 31); CI checks the packaged manifest and API compatibility.
-        minSdk = 31
+        applicationId = "df.root.arm32.tv"
+        // Android TV 11+ (API 30), 32-bit ARM user space; root engine unavailable.
+        minSdk = 30
         targetSdk = 36
-        versionCode = 40003
-        versionName = "4.0-modern.arm32-ui.1"
+        versionCode = 40005
+        versionName = "4.0-modern.tv5.4-arm32.1"
         ndk { abiFilters += listOf("armeabi-v7a") }
     }
 
@@ -39,7 +39,7 @@ android {
     buildTypes {
         debug {
             isDebuggable = true
-            // Keep the upstream package so native bootstrap paths remain correct.
+            // Distinct TV package; no original native bootstrap is built.
             versionNameSuffix = "-debug"
             signingConfig = signingConfigs.getByName("debug")
         }
