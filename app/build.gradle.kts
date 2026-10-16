@@ -15,14 +15,14 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        // Native v4.0 code hardcodes /data/user_de/0/df.root. Do not add a suffix.
-        applicationId = "df.root"
+        // Independent installation for ARMv7-compatible UI.
+        applicationId = "df.root.arm32"
         // Android 12 (API 31); CI checks the packaged manifest and API compatibility.
         minSdk = 31
         targetSdk = 36
-        versionCode = 40002
-        versionName = "4.0-modern.2"
-        ndk { abiFilters += listOf("arm64-v8a") }
+        versionCode = 40003
+        versionName = "4.0-modern.arm32-ui.1"
+        ndk { abiFilters += listOf("armeabi-v7a") }
     }
 
     signingConfigs {
@@ -59,7 +59,7 @@ android {
     lint { checkReleaseBuilds = false }
 
     externalNativeBuild {
-        cmake { path("src/main/jni/CMakeLists.txt") }
+        cmake { path("src/main/jni/arm32/CMakeLists.txt") }
     }
 
     packaging { jniLibs { useLegacyPackaging = true } }
