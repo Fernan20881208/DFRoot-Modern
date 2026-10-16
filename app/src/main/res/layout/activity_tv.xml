@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/df_background"
+    android:focusable="false"
+    android:clipToPadding="false">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="32dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_headline"
+            android:textColor="@color/df_on_surface"
+            android:textStyle="bold"
+            android:textSize="30sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/tv_subtitle"
+            android:textColor="@color/df_muted"
+            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/df_hero_card"
+            android:padding="22dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_status_label"
+                android:textColor="@color/df_on_container"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="@string/tv_kernel_other"
+                android:textColor="@color/df_on_container"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tv_no_root"
+                android:textColor="@color/df_on_container"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="@string/tv_device_heading"
+            android:textColor="@color/df_on_surface"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDevice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/df_surface_card"
+            android:padding="20dp"
+            android:textSize="18sp"
+            android:lineSpacingExtra="4dp"
+            android:textColor="@color/df_on_surface"
+            android:text="@string/tv_loading" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="18dp"
+            android:gravity="center_vertical">
+            <Button
+                android:id="@+id/tvCopy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="175dp"
+                android:minHeight="60dp"
+                android:text="@string/tv_copy"
+                android:textSize="17sp"
+                android:focusable="true"
+                android:nextFocusRight="@id/tvRefresh"
+                android:background="@drawable/df_tv_button" />
+            <Button
+                android:id="@+id/tvRefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="175dp"
+                android:minHeight="60dp"
+                android:layout_marginStart="18dp"
+                android:text="@string/refresh"
+                android:textSize="17sp"
+                android:focusable="true"
+                android:nextFocusLeft="@id/tvCopy"
+                android:nextFocusRight="@id/tvSource"
+                android:background="@drawable/df_tv_button" />
+            <Button
+                android:id="@+id/tvSource"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="195dp"
+                android:minHeight="60dp"
+                android:layout_marginStart="18dp"
+                android:text="@string/view_source"
+                android:textSize="17sp"
+                android:focusable="true"
+                android:nextFocusLeft="@id/tvRefresh"
+                android:background="@drawable/df_tv_button" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/tv_help"
+            android:textColor="@color/df_muted"
+            android:textSize="15sp" />
+    </LinearLayout>
+</ScrollView>
