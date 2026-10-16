@@ -56,19 +56,19 @@ public final class TvActivity extends Activity {
         String kernel = System.getProperty("os.version", "desconocido");
         boolean exactKernel = kernel.equals("5.4.284") || kernel.startsWith("5.4.284-")
                 || kernel.startsWith("5.4.284+");
-        diagnosticReport = "DFRoot Modern Android TV — Solo diagnóstico\\n"
-                + "Fabricante: " + Build.MANUFACTURER + "\\n"
-                + "Modelo: " + Build.MODEL + "\\n"
-                + "Hardware: " + Build.HARDWARE + "\\n"
-                + "Placa: " + Build.BOARD + "\\n"
-                + "Android: " + Build.VERSION.RELEASE + " (API " + Build.VERSION.SDK_INT + ")\\n"
-                + "Kernel: " + kernel + "\\n"
-                + "ABIs: " + Arrays.toString(Build.SUPPORTED_ABIS) + "\\n"
-                + "Parche de seguridad: " + Build.VERSION.SECURITY_PATCH + "\\n"
-                + "Paquete: " + getPackageName() + "\\n"
-                + "Root: NO DISPONIBLE en esta edicion de interfaz.\\n";
+        diagnosticReport = "DFRoot Modern Android TV — Solo diagnóstico\n"
+                + "Fabricante: " + Build.MANUFACTURER + "\n"
+                + "Modelo: " + Build.MODEL + "\n"
+                + "Hardware: " + Build.HARDWARE + "\n"
+                + "Placa: " + Build.BOARD + "\n"
+                + "Android: " + Build.VERSION.RELEASE + " (API " + Build.VERSION.SDK_INT + ")\n"
+                + "Kernel: " + kernel + "\n"
+                + "ABIs: " + Arrays.toString(Build.SUPPORTED_ABIS) + "\n"
+                + "Parche de seguridad: " + Build.VERSION.SECURITY_PATCH + "\n"
+                + "Paquete: " + getPackageName() + "\n"
+                + "Root: NO DISPONIBLE en esta edicion de interfaz.\n";
         String visible = String.format(Locale.ROOT,
-                "%s %s\\nAndroid %s (API %d)\\nKernel %s\\nArquitecturas %s\\nHardware %s",
+                "%s %s\nAndroid %s (API %d)\nKernel %s\nArquitecturas %s\nHardware %s",
                 Build.MANUFACTURER, Build.MODEL, Build.VERSION.RELEASE,
                 Build.VERSION.SDK_INT, kernel, Arrays.toString(Build.SUPPORTED_ABIS), Build.HARDWARE);
         device.setText(visible);
