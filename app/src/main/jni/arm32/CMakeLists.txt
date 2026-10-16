@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.22)
+project(dfroot_arm32_ui C)
+if(NOT ANDROID_ABI STREQUAL "armeabi-v7a")
+    message(FATAL_ERROR "This UI build requires armeabi-v7a.")
+endif()
+add_library(dfroot_archprobe SHARED arm32_probe.c)
