@@ -30,6 +30,8 @@ public class SettingsActivity extends Activity {
         // No automatic execution: hourly license requires online confirmation before every run.
         bindPreference(R.id.switchReboot, ExploitRunner.PREF_SOFT_REBOOT, prefs);
         bindPreference(R.id.switchModules, "disable_modules", prefs);
+        findViewById(R.id.switchReboot).setEnabled(false);
+        findViewById(R.id.switchModules).setEnabled(false);
     }
     private void bindPreference(int id, String key, SharedPreferences prefs) {
         Switch toggle = findViewById(id);
