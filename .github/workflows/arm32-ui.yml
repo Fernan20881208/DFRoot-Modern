@@ -1,0 +1,47 @@
+name: DFRoot Modern ARM32 UI
+
+on:
+  push:
+    branches: [arm32-ui]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-arm32:
+    name: ARMv7 Android APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install Android SDK 36
+        run: '"$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36"'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Validate resources
+        run: python3 scripts/validate_ui.py
+      - name: Build ARMv7 APK and run lint
+        run: ./gradlew :app:assembleDebug :app:lintDebug --stacktrace --no-daemon
+      - name: Validate Android 12 minimum and ABI
+        run: |
+          set -euo pipefail
+          APK="$(find app/build/outputs/apk/debug -maxdepth 1 -name '*.apk' -print -quit)"
+          test -n "$APK"
+          AAPT="$(find "$ANDROID_HOME/build-tools" -maxdepth 2 -type f -name aapt | sort -V | tail -1)"
+          test -n "$AAPT" && test -x "$AAPT"
+          "$AAPT" dump badging "$APK" | grep -F "sdkVersion:'31'"
+          "$AAPT" dump badging "$APK" | grep -F "native-code: 'armeabi-v7a'"
+          python3 scripts/verify_arm32.py "$APK"
+          mkdir -p dist
+          cp "$APK" dist/DFRoot-Modern-ARM32-UI-debug.apk
+          sha256sum dist/* > dist/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DFRoot-Modern-ARM32-UI
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 30
