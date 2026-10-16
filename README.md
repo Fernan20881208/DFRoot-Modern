@@ -40,7 +40,26 @@ Diagnóstico ADB comunicado para este equipo:
 - Modelo: `Smart TV`; plataforma: `rtd6748`; Android: `12`.
 - ABI de **aplicaciones**: `armeabi-v7a,armeabi` (32 bits).
 - Kernel: `5.4.284+` (compilación 23-ene-2026). `uname -m`: `armv8l`.
-- `armv8l` y una lista de ABI de Android de 32 bits **no prueban por sí solos que el kernel sea de 32 bits**. Algunos sistemas utilizan aplicaciones de 32 bits sobre un kernel ARM64. La configuración activa del kernel es determinante.
+- **El kernel ARM64 ya está confirmado** mediante la configuración activa obtenida directamente del televisor:
+
+```text
+ro.product.manufacturer=TCL
+ro.zygote=zygote32
+ro.product.cpu.abilist64=(vacío)
+CONFIG_ARM64=y
+CONFIG_ARCH_RTK6748=y
+CONFIG_MODULES=y
+CONFIG_MODVERSIONS=y
+CONFIG_IKCONFIG_PROC=y
+CONFIG_ARM64_4K_PAGES=y
+CONFIG_ARM64_PAGE_SHIFT=12
+```
+
+El kernel 5.4.284+ fue compilado con Android Clang 12.0.5 / LLD 12.0.5 y se publicó con fecha de compilación 23-ene-2026, según `/proc/version` del firmware. La APK de diagnóstico usa ABI ARM32 (`armeabi-v7a`) mientras que un módulo `.ko` para este kernel necesitaría ser AArch64/ELF64.
+
+**Importante:** `CONFIG_MODULES=y` no concede a la app permisos para cargar módulos, y `CONFIG_MODVERSIONS=y` exige verificar los CRC de símbolos y demás datos de compatibilidad. La fuente pública TCL `5.4.210` sigue sin coincidir con el binario instalado `5.4.284+`. Todavía no existe un exploit ni un módulo validado para este firmware.
+
+La pantalla de Android TV ahora intenta leer en segundo plano los indicadores relevantes de `/proc/config.gz` sin permisos root. Si Android/SELinux bloquea la lectura, la pantalla lo indicará en lugar de inventar resultados.
 
 ### Código fuente publicado con plataforma relacionada
 
