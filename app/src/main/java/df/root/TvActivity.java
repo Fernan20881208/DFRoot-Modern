@@ -23,6 +23,7 @@ public final class TvActivity extends Activity {
     private TextView status;
     private TextView device;
     private String diagnosticReport = "";
+    private int diagnosticGeneration = 0;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,27 +54,42 @@ public final class TvActivity extends Activity {
     }
 
     private void updateDiagnostics() {
-        String kernel = System.getProperty("os.version", "desconocido");
-        boolean exactKernel = kernel.equals("5.4.284") || kernel.startsWith("5.4.284-")
-                || kernel.startsWith("5.4.284+");
-        diagnosticReport = "DFRoot Modern Android TV — Solo diagnóstico\n"
-                + "Fabricante: " + Build.MANUFACTURER + "\n"
-                + "Modelo: " + Build.MODEL + "\n"
-                + "Hardware: " + Build.HARDWARE + "\n"
-                + "Placa: " + Build.BOARD + "\n"
-                + "Android: " + Build.VERSION.RELEASE + " (API " + Build.VERSION.SDK_INT + ")\n"
-                + "Kernel: " + kernel + "\n"
-                + "ABIs: " + Arrays.toString(Build.SUPPORTED_ABIS) + "\n"
-                + "Parche de seguridad: " + Build.VERSION.SECURITY_PATCH + "\n"
-                + "Paquete: " + getPackageName() + "\n"
-                + "Root: NO DISPONIBLE en esta edicion de interfaz.\n";
-        String visible = String.format(Locale.ROOT,
-                "%s %s\nAndroid %s (API %d)\nKernel %s\nArquitecturas %s\nHardware %s",
+        final int generation = ++diagnosticGeneration;
+        final String kernel = System.getProperty("os.version", "desconocido");
+        final boolean exactKernel = kernel.equals("5.4.284")
+                || kernel.startsWith("5.4.284-") || kernel.startsWith("5.4.284+");
+        final String visible = String.format(Locale.ROOT,
+                "%s %s\nAndroid %s (API %d)\nKernel %s\nABI de las apps: %s\nHardware %s",
                 Build.MANUFACTURER, Build.MODEL, Build.VERSION.RELEASE,
-                Build.VERSION.SDK_INT, kernel, Arrays.toString(Build.SUPPORTED_ABIS), Build.HARDWARE);
+                Build.VERSION.SDK_INT, kernel, Arrays.toString(Build.SUPPORTED_ABIS),
+                Build.HARDWARE);
+
+        // Obtain live kernel flags in the background. SELinux may prevent reading
+        // /proc/config.gz on some firmware versions; absence is not a failure.
+        status.setText(R.string.tv_loading);
         device.setText(visible);
-        status.setText(exactKernel
-            ? getString(R.string.tv_kernel_identified)
-            : getString(R.string.tv_kernel_other));
+        new Thread(() -> {
+            final KernelProbe.Result flags = KernelProbe.inspect();
+            final String report = "DFRoot Modern Android TV — Solo diagnóstico\n"
+                    + "Fabricante: " + Build.MANUFACTURER + "\n"
+                    + "Modelo: " + Build.MODEL + "\n"
+                    + "Hardware: " + Build.HARDWARE + "\n"
+                    + "Placa: " + Build.BOARD + "\n"
+                    + "Android: " + Build.VERSION.RELEASE
+                    + " (API " + Build.VERSION.SDK_INT + ")\n"
+                    + "Kernel: " + kernel + "\n"
+                    + "ABI de las apps: " + Arrays.toString(Build.SUPPORTED_ABIS) + "\n"
+                    + "Parche de seguridad: " + Build.VERSION.SECURITY_PATCH + "\n"
+                    + "Paquete: " + getPackageName() + "\n\n"
+                    + flags.configReport
+                    + "Root: NO DISPONIBLE en esta edición de diagnóstico.\n";
+            runOnUiThread(() -> {
+                if (isFinishing() || isDestroyed() || generation != diagnosticGeneration) return;
+                diagnosticReport = report;
+                device.setText(visible + "\n\n" + flags.summary);
+                status.setText(exactKernel ?
+                        R.string.tv_kernel_identified : R.string.tv_kernel_other);
+            });
+        }, "DFRoot-ReadOnly-KernelProbe").start();
     }
 }
