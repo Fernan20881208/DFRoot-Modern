@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
+<title>DFRoot Modern · Keys Manager</title>
+<style>
+:root{color-scheme:dark;font:16px/1.55 system-ui,-apple-system,sans-serif;background:#10131b;color:#f0effb}
+*{box-sizing:border-box}body{max-width:1000px;margin:auto;padding:28px 20px 60px}
+h1{font-size:clamp(27px,5vw,38px);letter-spacing:-1px;margin:0}h1 span{color:#c6b3ff}
+h2{margin:0 0 12px;font-size:21px}p,.muted{color:#aeb3c8;margin:6px 0 16px}
+.card{background:#1c2130;border:1px solid #353a50;border-radius:24px;padding:24px;margin:18px 0}
+input,select,button{font:inherit;border-radius:13px;border:1px solid transparent;min-height:49px;padding:10px 14px}
+input,select{background:#2d3446;color:#fff;border-color:#40465a}input[type=number]{width:90px}
+input[type=email],input[type=password]{width: min(100%,310px)}
+button{background:#c6b3ff;color:#211339;font-weight:650;cursor:pointer}
+button:hover{filter:brightness(1.08)}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #f5deff;outline-offset:2px}
+button:disabled{opacity:.55;cursor:wait}.secondary{background:#3b4357;color:#fff}.danger{background:#ffbdc0;color:#410a17}
+.controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin:14px 0}
+label{display:flex;flex-direction:column;gap:5px;color:#c9c8de}
+.mini{font-size:13px}.codebox{white-space:pre-wrap;overflow-wrap:anywhere;background:#10141e;padding:16px;border-radius:12px;line-height:1.9;font:14px/1.7 ui-monospace,monospace}
+.row{display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid #363c4e;padding:13px 0}
+.row>div{min-width:0;overflow-wrap:anywhere}.row .muted{font-size:13px;margin:0}
+.tag{display:inline-block;border:1px solid #77718e;border-radius:999px;padding:2px 9px;font-size:12px}
+#app{display:none}#message{min-height:30px;color:#f5c89e}
+footer{font-size:13px;color:#929ab0}
+</style></head><body>
+<header><h1>DFRoot <span>Modern</span></h1><p>Gestión de licencias ARM64 · DFRoot 4.5</p></header>
+<section class="card" id="login">
+<h2>Administrador</h2><p>Ingresa con una cuenta autorizada en Supabase Auth.</p>
+<div class="controls"><label>Correo<input id="email" type="email" autocomplete="username" placeholder="tu@correo.com"></label>
+<label>Contraseña<input id="password" type="password" autocomplete="current-password"></label>
+<button id="signin" type="button">Entrar</button></div>
+</section>
+<main id="app">
+<section class="card"><h2>Generar keys</h2>
+<p>Temporales: 1 hora desde la primera activación (activables durante 7 días). Permanentes: sin vencimiento, vinculadas a una instalación y revocables.</p>
+<div class="controls"><label>Tipo
+<select id="type"><option value="hourly">1 hora · DFM-</option><option value="permanent">Permanente · DFP-</option></select></label>
+<label>Cantidad (1–20)<input id="count" type="number" min="1" max="20" value="1"></label>
+<button type="button" id="create">Generar</button>
+<button type="button" id="logout" class="secondary">Cerrar sesión</button>
+</div>
+<div id="generatedArea" hidden><p>Guarda estas keys: no volverán a mostrarse.</p>
+<div id="generated" class="codebox"></div><button id="copy" class="secondary" type="button">Copiar keys</button></div>
+</section>
+<section class="card"><div class="controls" style="justify-content:space-between"><h2>Claves recientes</h2>
+<button type="button" id="refresh" class="secondary">Actualizar</button></div>
+<div id="items" aria-live="polite"></div></section>
+</main><p id="message" role="status" aria-live="polite"></p>
+<footer>Las claves se guardan como hashes SHA-256. Una clave permanente requiere validación en línea y puede revocarse en cualquier momento.</footer>
+<script>
+"use strict";
+const SB="https://zzlvupunploglgxbgllm.supabase.co";
+const PUB="sb_publishable_VrbAjar4NUk6PvE92Je8Ig_Y2HPQV50";
+const API=SB+"/functions/v1/dfroot-license";
+const el=id=>document.getElementById(id);
+let bearer="",lastKeys=[];
+const message=(s)=>{el("message").textContent=String(s)};
+const busy=(id,on)=>{el(id).disabled=on};
+async function call(action,extra={}){
+ const res=await fetch(API,{method:"POST",headers:{"content-type":"application/json",apikey:PUB,authorization:"Bearer "+bearer},body:JSON.stringify({action,...extra})});
+ const data=await res.json();
+ if(!res.ok)throw Error(data.error||"HTTP "+res.status);
+ return data;
+}
+async function load(){
+ const data=await call("list");
+ el("items").replaceChildren();
+ for(const k of data.keys){
+  const row=document.createElement("div");row.className="row";
+  const info=document.createElement("div");
+  const status=k.revoked_at?"Revocada":k.license_type==="permanent"?(k.activated_at?"Activa sin vencimiento":"Sin activar"):(k.expires_at?(new Date(k.expires_at)>new Date()?"Activa hasta "+new Date(k.expires_at).toLocaleString():"Caducada"):(new Date(k.redeem_deadline)>new Date()?"Sin activar":"Fuera de plazo"));
+  const header=document.createElement("div");
+  const title=document.createElement("strong");title.textContent="•••• "+k.key_suffix+" ";
+  const tag=document.createElement("span");tag.className="tag";tag.textContent=k.license_type==="permanent"?"Permanente":"1 hora";
+  header.append(title,tag);
+  const detail=document.createElement("p");detail.className="muted";
+  detail.textContent=status+" · Creada "+new Date(k.created_at).toLocaleString();
+  info.append(header,detail);row.append(info);
+  if(!k.revoked_at){
+    const b=document.createElement("button");b.type="button";b.className="danger";b.textContent="Revocar";
+    b.onclick=async()=>{if(!confirm("¿Revocar la clave terminada en "+k.key_suffix+"?"))return;busy("refresh",true);try{await call("revoke",{id:k.id});await load();message("Clave revocada")}catch(e){message(e.message)}finally{busy("refresh",false)}};
+    row.append(b);
+  }
+  el("items").append(row);
+ }
+ if(!data.keys.length)el("items").textContent="Todavía no hay licencias.";
+}
+el("signin").onclick=async()=>{
+ busy("signin",true);
+ try{
+  const response=await fetch(SB+"/auth/v1/token?grant_type=password",{method:"POST",headers:{"content-type":"application/json",apikey:PUB},body:JSON.stringify({email:el("email").value.trim(),password:el("password").value})});
+  const data=await response.json();
+  if(!response.ok)throw Error(data.error_description||data.msg||"Credenciales inválidas");
+  bearer=data.access_token;
+  await load();
+  el("login").hidden=true;el("login").style.display="none";
+  el("app").style.display="block";el("password").value="";
+  message("Acceso autorizado.");
+ }catch(e){bearer="";message(e.message)}finally{busy("signin",false)}
+};
+el("create").onclick=async()=>{
+ busy("create",true);
+ try{
+  const count=Number(el("count").value);
+  if(!Number.isInteger(count)||count<1||count>20)throw Error("La cantidad debe estar entre 1 y 20");
+  const license_type=el("type").value;
+  const d=await call("create",{count,license_type});
+  lastKeys=d.keys||[];
+  el("generated").textContent=lastKeys.join("\n");
+  el("generatedArea").hidden=false;
+  await load();
+  message("Generadas "+lastKeys.length+" keys "+(license_type==="permanent"?"permanentes":"de una hora"));
+ }catch(e){message(e.message)}finally{busy("create",false)}
+};
+el("copy").onclick=async()=>{try{await navigator.clipboard.writeText(lastKeys.join("\n"));message("Keys copiadas")}catch{message("Selecciona las keys para copiarlas")}};
+el("refresh").onclick=async()=>{busy("refresh",true);try{await load();message("Lista actualizada")}catch(e){message(e.message)}finally{busy("refresh",false)}};
+el("logout").onclick=()=>{bearer="";lastKeys=[];el("generated").textContent="";el("generatedArea").hidden=true;el("app").style.display="none";el("login").style.display="block";message("Sesión cerrada")};
+</script></body></html>
