@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.provider.Settings;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -40,7 +39,7 @@ final class LicenseGate {
             .setNegativeButton(R.string.cancel, null)
             .setPositiveButton(R.string.execute, (dialog, which)-> {
                 String key = input.getText().toString().trim().toUpperCase(java.util.Locale.ROOT);
-                if (!key.matches("DFM-([A-F0-9]{8}-){3}[A-F0-9]{8}")) {
+                if (!key.matches("DF[MP]-([A-F0-9]{8}-){3}[A-F0-9]{8}")) {
                     Toast.makeText(activity,R.string.license_invalid,Toast.LENGTH_LONG).show();
                     return;
                 }

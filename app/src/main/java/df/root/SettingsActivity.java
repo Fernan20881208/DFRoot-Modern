@@ -18,7 +18,7 @@ public class SettingsActivity extends Activity {
         ModernUi.applyInsets(this, findViewById(R.id.settingsRoot));
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
         findViewById(R.id.btnSource).setOnClickListener(v -> startActivity(new Intent(
-                Intent.ACTION_VIEW, Uri.parse("https://github.com/Fernan20881208/DFRoot-Modern/tree/modern-v4.0"))));
+                Intent.ACTION_VIEW, Uri.parse("https://github.com/Fernan20881208/DFRoot-Modern/tree/modern-v4.5"))));
         SharedPreferences prefs = createDeviceProtectedStorageContext().getSharedPreferences(
                 ExploitRunner.PREFS_NAME, Context.MODE_PRIVATE);
         ComponentName receiver = new ComponentName(this, BootReceiver.class);

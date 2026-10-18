@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="title_main">DFRoot Modern</string>
-    <string name="subtitle_main">MODERN  /  BASE 4.0</string>
+    <string name="subtitle_main">MODERN  /  BASE 4.5 · ARM64</string>
     <string name="logo_description">Ícono de protección</string>
     <string name="section_status">ESTADO ACTUAL</string>
     <string name="status_not_ready">Elige tu gestor</string>
@@ -21,10 +21,10 @@
     <string name="choose_manager">Seleccionar gestor SU</string>
     <string name="manager_icon">Icono del gestor SU</string>
     <string name="warning_title">Atención: operación de riesgo</string>
-    <string name="warning_detail">DFRoot puede congelar o reiniciar equipos incompatibles. El rediseño conserva el motor original de la versión 4.0.</string>
+    <string name="warning_detail">DFRoot puede congelar o reiniciar equipos incompatibles. El rediseño conserva el motor original de la versión 4.5.</string>
     <string name="run_action">Ejecutar DFRoot</string>
     <string name="confirm_title">¿Iniciar DFRoot?</string>
-    <string name="confirm_message">Se ejecutará el motor original de DFRoot 4.0. Puede congelar o reiniciar el dispositivo. Confirma solo después de revisar su compatibilidad.</string>
+    <string name="confirm_message">Se ejecutará el motor original de DFRoot 4.5. Puede congelar o reiniciar el dispositivo. Confirma solo después de revisar su compatibilidad.</string>
     <string name="execute">Ejecutar</string>
     <string name="cancel">Cancelar</string>
     <string name="section_logs">Consola</string>
@@ -33,7 +33,7 @@
     <string name="log_empty">No hay registros para copiar</string>
     <string name="log_copied">Registro copiado</string>
     <string name="log_placeholder">El registro aparecerá aquí al ejecutar DFRoot.</string>
-    <string name="footer">DFRoot Modern · 4.0\nMotor original de diabl0w</string>
+    <string name="footer">DFRoot Modern · 4.5\nMotor original de diabl0w</string>
     <string name="settings">Ajustes</string>
     <string name="brand">DFRoot</string>
     <string name="home_headline">Tu dispositivo.\nTu control.</string>
@@ -41,8 +41,8 @@
     <string name="status_error_detail">Consulta el código de salida y los detalles en la consola.</string>
     <string name="status_complete">Proceso terminado</string>
     <string name="status_complete_detail">El motor devolvió 0. Comprueba el acceso root desde tu gestor SU.</string>
-    <string name="no_managers">No se encontró un gestor con libksud.so accesible. Instala un gestor KernelSU compatible y pulsa Actualizar. DFRoot 4.0 necesita ese archivo en la carpeta nativa del gestor.</string>
-    <string name="manager_hint">Solo se muestran gestores con libksud.so accesible para DFRoot 4.0.</string>
+    <string name="no_managers">No se encontró un gestor con libksud.so accesible. Instala un gestor KernelSU compatible y pulsa Actualizar. DFRoot 4.5 necesita ese archivo en la carpeta nativa del gestor.</string>
+    <string name="manager_hint">Solo se muestran gestores con libksud.so accesible para DFRoot 4.5.</string>
     <string name="refresh">Actualizar</string>
     <string name="back">Volver</string>
     <string name="settings_headline">A tu manera.</string>
@@ -58,11 +58,11 @@
     <string name="modules_title">Desactivar módulos KernelSU</string>
     <string name="modules_detail">Se aplica en la próxima ejecución de DFRoot.</string>
     <string name="settings_about">Acerca de</string>
-    <string name="settings_version">DFRoot Modern 4.0</string>
-    <string name="settings_about_detail">Interfaz inspirada en Material You de Android 16. Código base: DFRoot v4.0, de diabl0w.</string>
+    <string name="settings_version">DFRoot Modern 4.5</string>
+    <string name="settings_about_detail">Interfaz inspirada en Material You de Android 16. Código base: DFRoot v4.5, de diabl0w.</string>
     <string name="view_source">Código fuente</string>
-    <string name="license_prompt">Clave de acceso por 1 hora</string>
-    <string name="license_hint">Introduce tu clave. Se activará durante 60 minutos desde el primer uso y quedará vinculada a este dispositivo. Necesitas Internet para cada ejecución.</string>
+    <string name="license_prompt">Licencia de 1 hora o permanente</string>
+    <string name="license_hint">Introduce una clave DFM- (1 hora) o DFP- (permanente). La licencia se vincula a este dispositivo y requiere conexión a Internet antes de cada ejecución. Las licencias permanentes pueden revocarse.</string>
     <string name="license_invalid">Clave no válida, caducada o ya utilizada en otro dispositivo.</string>
     <string name="license_network">No fue posible verificar la clave. Comprueba tu conexión.</string>
     <string name="license_checking">Validando clave…</string>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Catch a seemingly valid APK that is missing the executables invoked by v4.0."""
+"""Catch a seemingly valid APK that is missing the executables invoked by v4.5."""
 import sys
 from zipfile import ZipFile
 
