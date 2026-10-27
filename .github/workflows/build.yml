@@ -1,10 +1,10 @@
-name: DFRoot Modern 4.5
+name: DFRoot Modern 4.7
 
 on:
   push:
-    branches: [modern-v4.5]
+    branches: [modern-v4.7]
   pull_request:
-    branches: [modern-v4.5]
+    branches: [modern-v4.7]
   workflow_dispatch:
 
 permissions:
@@ -32,8 +32,8 @@ jobs:
         id: module-cache
         with:
           path: out/dfroot-${{ matrix.kmi }}.ko
-          key: df-v45-${{ matrix.kmi }}-20260828-${{ hashFiles('lkm/**') }}
-      - name: Build official v4.5 module
+          key: df-v47-${{ matrix.kmi }}-20260828-${{ hashFiles('lkm/**') }}
+      - name: Build official v4.7 module
         if: steps.module-cache.outputs.cache-hit != 'true'
         shell: bash
         run: |
@@ -64,10 +64,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Verify engine sources exactly match upstream v4.5
+      - name: Verify engine sources exactly match upstream v4.7
         run: |
           set -euo pipefail
-          git fetch --no-tags --depth=1 https://github.com/diabl0w/DFRoot.git refs/tags/v4.5
+          git fetch --no-tags --depth=1 https://github.com/diabl0w/DFRoot.git refs/tags/v4.7
           git diff --exit-code FETCH_HEAD HEAD -- \
             app/src/main/jni lkm app/src/main/java/df/root/ExploitRunner.java \
             app/src/main/java/df/root/BootReceiver.java
@@ -81,32 +81,32 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Install upstream Android SDK
-        run: '"$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36"'
+        run: '"$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37"'
       - uses: gradle/actions/setup-gradle@v4
       - name: Validate resources
         run: python3 scripts/validate_ui.py
       - name: Build debug APK
         run: ./gradlew :app:assembleDebug :app:lintDebug --stacktrace --no-daemon
-      - name: Verify Android 12 minimum SDK in APK
+      - name: Verify Android 12L minimum SDK (API 32) in APK
         run: |
           set -euo pipefail
           APK="$(find app/build/outputs/apk/debug -maxdepth 1 -name '*.apk' -print -quit)"
           test -n "$APK"
           AAPT="$(find "$ANDROID_HOME/build-tools" -maxdepth 2 -type f -name aapt | sort -V | tail -1)"
           test -n "$AAPT" && test -x "$AAPT"
-          "$AAPT" dump badging "$APK" | grep -F "sdkVersion:'31'"
+          "$AAPT" dump badging "$APK" | grep -F "sdkVersion:'32'"
       - name: Verify packaged native executables
         run: |
           mkdir -p dist
           APK="$(find app/build/outputs/apk/debug -maxdepth 1 -name '*.apk' -print -quit)"
           test -n "$APK"
           python3 scripts/verify_apk.py "$APK"
-          cp "$APK" dist/DFRoot-Modern-4.5-debug.apk
-          git archive --format=zip --output=dist/DFRoot-Modern-4.5-source.zip HEAD
+          cp "$APK" dist/DFRoot-Modern-4.7-debug.apk
+          git archive --format=zip --output=dist/DFRoot-Modern-4.7-source.zip HEAD
           sha256sum dist/* > dist/SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: DFRoot-Modern-4.5
+          name: DFRoot-Modern-4.7
           path: dist/*
           if-no-files-found: error
           retention-days: 30
