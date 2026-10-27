@@ -51,3 +51,6 @@ No incrustes claves `service_role` en la APK ni en el panel. El frontend solo de
 La APK de CI usa firma de depuración; puede ser necesario desinstalar otra instalación de `df.root` firmada con una clave diferente. Desinstalar la aplicación borra sus ajustes. No desinstales el gestor KernelSU.
 
 **Verificaciones CI:** motor nativo comparado con upstream `v4.7`; compilación ARM64; compilación APK y Android Lint; SDK mínimo 32; ejecutables ELF64/AArch64; integridad del artefacto. El éxito de CI no sustituye las pruebas reales en un dispositivo recuperable y autorizado.
+
+
+<!-- Temporary validation marker for the SDK 36 CI rerun. -->
