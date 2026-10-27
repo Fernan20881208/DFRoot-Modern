@@ -17,6 +17,8 @@
 #include <arpa/inet.h>
 #include "aes256.h"
 
+#define eos(s) (s + strlen(s))
+
 static const char kCrashDump[] = "/apex/com.android.runtime/bin/crash_dump64";
 static char    *libcxx_ko_target;
 
@@ -303,7 +305,21 @@ static int read_device_versions(int *andr, int *major, int *minor) {
     if (uname(&u) != 0) return -1;
     if (sscanf(u.release, "%d.%d", major, minor) != 2) return -1;
     const char *m = strstr(u.release, "android");
-    if (!m) return -1;
+    if (!m) {
+        printf("uname -r is missing Android version, trying getprop\n");
+
+        char vendor_ver[5];
+        char release[15];
+
+        FILE *f = popen("getprop ro.vendor.build.version.release", "r");
+        fgets(vendor_ver, sizeof(vendor_ver), f);
+        pclose(f);
+
+        sprintf(release, "android");
+        sprintf(eos(release), "%s", vendor_ver);
+
+        m = release;
+    }
     *andr = atoi(m + 7);
     return (*andr > 0) ? 0 : -1;
 }
