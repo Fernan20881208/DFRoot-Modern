@@ -39,8 +39,8 @@ if missing_strings or missing_ids or missing_colors:
 print(f'OK: {len(xml_files)} XML; {len(string_refs)} strings; {len(id_refs)} IDs; '
       f'{len(colors_used)} colores DFRoot')
 
-# v4.5 hardcodes this package in its unchanged native bootstrap and kernel module.
+# v4.7 hardcodes this package in its unchanged native bootstrap and kernel module.
 build = (root / 'app/build.gradle.kts').read_text()
 if not re.search(r'applicationId\s*=\s*"df\.root"', build) or re.search(r'^\s*applicationIdSuffix', build, re.M):
-    sys.exit('ERROR: el motor v4.5 requiere applicationId df.root sin sufijo')
-print('OK: applicationId compatible con las rutas nativas de v4.5')
+    sys.exit('ERROR: el motor v4.7 requiere applicationId df.root sin sufijo')
+print('OK: applicationId compatible con las rutas nativas de v4.7')
