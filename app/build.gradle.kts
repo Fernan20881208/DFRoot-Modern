@@ -12,19 +12,19 @@ val hasReleaseSigning = listOf("KEYSTORE_FILE", "KEYSTORE_PASSWORD", "KEY_ALIAS"
 
 android {
     namespace = "df.root"
-    compileSdk = 36
+    compileSdk = 37
 
-    // Required by DFRoot v4.5 ExploitRunner (BuildConfig.VERSION_NAME).
+    // Required by DFRoot v4.7 ExploitRunner (BuildConfig.VERSION_NAME).
     buildFeatures { buildConfig = true }
 
     defaultConfig {
-        // Native v4.5 code hardcodes /data/user_de/0/df.root. Do not add a suffix.
+        // Native v4.7 code hardcodes /data/user_de/0/df.root. Do not add a suffix.
         applicationId = "df.root"
-        // Android 12 (API 31); CI checks the packaged manifest and API compatibility.
-        minSdk = 31
-        targetSdk = 36
-        versionCode = 40501
-        versionName = "4.5-modern.1"
+        // Android 12L (API 32); CI checks the packaged manifest and API compatibility.
+        minSdk = 32
+        targetSdk = 37
+        versionCode = 40701
+        versionName = "4.7-modern.1"
         ndk { abiFilters += listOf("arm64-v8a") }
     }
 
