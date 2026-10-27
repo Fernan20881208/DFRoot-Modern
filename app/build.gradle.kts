@@ -12,7 +12,7 @@ val hasReleaseSigning = listOf("KEYSTORE_FILE", "KEYSTORE_PASSWORD", "KEY_ALIAS"
 
 android {
     namespace = "df.root"
-    compileSdk = 37
+    compileSdk = 36
 
     // Required by DFRoot v4.7 ExploitRunner (BuildConfig.VERSION_NAME).
     buildFeatures { buildConfig = true }
@@ -22,7 +22,7 @@ android {
         applicationId = "df.root"
         // Android 12L (API 32); CI checks the packaged manifest and API compatibility.
         minSdk = 32
-        targetSdk = 37
+        targetSdk = 36
         versionCode = 40701
         versionName = "4.7-modern.1"
         ndk { abiFilters += listOf("arm64-v8a") }
